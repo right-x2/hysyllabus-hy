@@ -1,0 +1,307 @@
+{% extends "layout.html" %}
+{% block head%}
+    {{ super() }}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          {% for i in range(grade_len)%}
+            ['{{grade_name[i]}}', {{grade_rate[i]}}],
+          {% endfor %}
+        ]);
+
+        var options = {
+          title: '성적비율'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <style>
+      .contents-box{
+        display:flex;
+        width:1000px;
+        margin-top: 50px;
+        border-radius:2px;
+      
+        padding:10px;
+      }
+      .content{
+        width:500px;
+        left = 0;
+      }
+      #piechart{
+        background: gray:
+      }
+      .month-table{
+        width: 1000px;
+      }
+
+        .review-box{
+          width:500px;
+          height: 900px;
+        }
+       .rating {
+        display: inline-block;
+        unicode-bidi: bidi-override;
+        color: #888888;
+        height: 25px;
+        width: auto;
+        margin: 0;
+        position: relative;
+        padding: 0;
+      }
+       .review-rating {
+        display: inline-block;
+        unicode-bidi: bidi-override;
+        color: #888888;
+        font-size: 5px;
+        height: 10px;
+        width: auto;
+        margin: 0;
+        position: relative;
+        padding: 0;
+        display:flex;
+        
+      }
+      .rating-upper {
+        color: #c52b2f;
+        padding: 0;
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        margin-right:5px;
+      }
+
+      .review-rating-lower {
+        padding: 0;
+        display: flex;
+        z-index: 0;
+        font-size:5px;
+      }
+      .review-rating-upper {
+        color: #c52b2f;
+        padding: 0;
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        font-size:5px;
+      }
+
+      .rating-lower {
+        padding: 0;
+        display: flex;
+        z-index: 0;
+      }
+      .review-container{
+        border: 1px solid;
+        height: 350px;
+        width: 500px;
+        overflow:scroll; 
+      }
+      .review{
+        font-size:12px;
+        text-align:left;
+      }
+      .word-container{
+        display:flex;
+        height: 350px;
+      }
+      .pos_list{
+        width:250px;
+      }
+      .neg_list{
+        width:250px;
+      }
+      th{
+        font-size:18px;
+      }
+      td{
+        font-size:16px;
+      }
+      p{
+        text-align:left;
+        margin-bottom:4px;
+      }
+      .aim{
+        font-size:12px;
+        text-align:left;
+        overflow:scroll;
+        height: 150px;
+        border-radius:5px;
+        padding: 20px;
+        border: 1px solid black;
+      }
+      table{
+        border: solid 1px #DDEEEE;
+        width:200px;
+      }
+      thead th {
+          background-color: #DDEFEF;
+          border: solid 1px #DDEEEE;
+          color: #336B6B;
+          text-align: center;
+          text-shadow: 1px 1px 1px #fff;
+      }
+      tbody td {
+          border: solid 1px #DDEEEE;
+          color: #333;
+          text-align: center;
+          text-shadow: 1px 1px 1px #fff;
+      }
+      img{
+         width: 500px;
+         height: 400px;
+     }
+    table{
+        border: solid 1px #DDEEEE;
+        width:400px;
+      }
+      thead th {
+          background-color: #DDEFEF;
+          border: solid 1px #DDEEEE;
+          color: #336B6B;
+          text-align: left;
+          text-shadow: 1px 1px 1px #fff;
+      }
+      tbody td {
+          text-align:center;
+          border: solid 1px #DDEEEE;
+          color: #333;
+          text-align: left;
+          text-shadow: 1px 1px 1px #fff;
+      }
+      .word_content{
+          width:500px;
+      }
+      .word_table{
+          width:500px;
+      }
+      li{
+        margin-left:0px;
+        width:400px;
+        text-align:left;
+      }
+     .lec_name{
+      
+        margin-top:80px;
+        width:300px;
+        height:50px;
+        text-align:center;
+        font-size:35px;
+        font-family: 'IBMPlexSansKR-Bold';
+      }
+      .month-main{
+        margin-top:20px;
+      }
+
+            @font-face {
+        font-family: 'IBMPlexSansKR-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Bold.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+          @font-face {
+        font-family: 'IBMPlexSansKR-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    h2{
+      font-family:'IBMPlexSansKR-Regular';
+    }
+    </style>
+{% endblock%}
+{% block content %}
+  <center>
+      <div class="lec_name">
+          {%if lecName is not none%}
+            {{lecName}}
+          {% else%}
+            선택된 강의 없음
+          {% endif%}
+      </div>
+    <div class="contents-box">
+        <div class="content">
+            <h2>세부정보</h2>
+            <div id="piechart" style="width: 400px; height: 400px;"></div>
+            <ul>  
+              <li>학점: {{lec_count}}</li>
+              <li>학수번호: {{lec_code}}</li>
+              <li>과목구분: {{unit}}</li>
+              <li>수업형태: {{lec_type}}</li>
+              <li>선수과목: {{pre_lec}}</li>
+              <li>팀프로젝트: OFF</li>
+              <li>교과목개요 수업목표 및 안내</li>
+            </ul>
+            <div class="aim">{{lec_aim}}</div>
+        </div>
+        <div class="word_content">
+            <h2>강의 키워드</h2>
+      {% if list_len !=-1%}
+            <img src="../static/img/{{img_name}}" >
+      {% endif %}
+            <div class="word_table">
+                <table class="table-striped">
+                    <thead>
+                    <tr>
+                        <th>순위</th>
+                        <th>단어</th>
+                        <th>빈도</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                      {% if list_len !=-1%}
+                        {% for i in range(list_len) %}
+                            <tr>
+                            <td scope="row">{{i+1}}</td>
+                            <td>{{my_word_list[i][0]}}</td>
+                            <td>{{my_word_list[i][1]}}</td>
+                            </tr>
+                        {% endfor %}  
+                      {% endif %}
+                    </tbody>
+                </table>
+              </div>
+          </div>
+    </div>
+        <div class="month-main">
+          <h3>월별 강의주제</h2>
+          <div class="month-table">
+            <div class="table-wrap">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>월</th>
+                    <th>주제</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for idx in range(4)%}
+                      <tr>
+                        <td class="week">{{idx+3}}</td>
+                        <td class="main">{{content_list[idx]}}</td>
+                      </tr> 
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+  </center>
+
+{% endblock %}

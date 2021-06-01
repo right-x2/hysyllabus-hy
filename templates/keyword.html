@@ -1,0 +1,346 @@
+{% extends "layout.html" %}
+{% block head %}
+    {{ super() }}
+    <script src="https://cdn.anychart.com/releases/8.0.0/js/anychart-base.min.js"></script>
+    <script>
+
+        anychart.onDocumentReady(function() {
+
+        // set the data
+        var data = {
+          header: ["Name", "count"],
+          rows: [
+          {% if all_review_list is defined%}
+            ["5", {{all_review_list[5]}}],
+            ["4", {{all_review_list[4]}}],
+            ["3", {{all_review_list[3]}}],
+            ["2", {{all_review_list[2]}}],
+            ["1", {{all_review_list[1]}}],
+          {% endif %}
+    
+        ]};
+
+        // create the chart
+        var chart = anychart.column();
+
+        // add data
+        chart.data(data);
+
+        // set the chart title
+        chart.title("별점 분포도");
+
+        // draw
+        chart.container("container");
+        chart.draw();
+      });
+    </script>
+    
+
+    <style>
+      .contents-box{
+        display:flex;
+        width:1000px;
+        margin-top: 100px;
+      }
+      .content{
+        width:500px;
+        left = 0;
+      }
+      #piechart{
+        background: gray:
+      }
+      .detail{
+        width:400px;
+        height: 400px;
+      }
+      .month-table{
+        width: 1000px;
+      }
+
+        .review-box{
+          display:flex;
+          margin-top:20px;
+          width:1050px;
+          height: 1000px;
+          justify-content: space-between;
+        }
+       .rating {
+        display: inline-block;
+        unicode-bidi: bidi-override;
+        color: #888888;
+
+        width: auto;
+        font-size:25px;
+        margin: 0;
+        position: relative;
+        padding: 0;
+      }
+       .review-rating {
+        display: inline-block;
+        unicode-bidi: bidi-override;
+        color: #888888;
+        font-size: 5px;
+        height: 10px;
+        width: auto;
+        margin: 0;
+        position: relative;
+        padding: 0;
+        display:flex;
+        
+      }
+      .rating-upper {
+        color: #c52b2f;
+        padding: 0;
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        margin-right:5px;
+      }
+
+      .review-rating-lower {
+        padding: 0;
+        display: flex;
+        z-index: 0;
+      }
+      .review-rating-upper {
+        color: #c52b2f;
+        padding: 0;
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+      }
+
+      .rating-lower {
+        padding: 0;
+        display: flex;
+        z-index: 0;
+      }
+      .review-container{
+        border-radius:30px;
+        padding:20px;
+        height: 750px;
+        overflow:scroll;
+        width :500px; 
+      }
+      .review{
+        font-size:12px;
+        text-align:left;
+      }
+      .word-container{
+        margin-bottom:20px;
+        border-radius:30px;
+        display:flex;
+        width:500px;
+        height: 350px;
+      }
+      .pos_list{
+        width:400px;
+      }
+      .neg_list{
+        width:400px;
+      }
+      th{
+        font-size:18px;
+      }
+      td{
+        font-size:16px;
+      }
+      p{
+        text-align:left;
+        margin-bottom:4px;
+      }
+      .aim{
+        font-size:12px;
+        text-align:left;
+        overflow:scroll;
+        height: 150px;
+      }
+      table{
+        border: solid 1px #DDEEEE;
+        width:200px;
+        background:#FFFFFF;
+        
+      }
+      thead th {
+          background-color: #DDEFEF;
+          border: solid 1px #DDEEEE;
+          color: #336B6B;
+          text-align: center;
+          text-shadow: 1px 1px 1px #fff;
+      }
+      tbody td {
+          border: solid 1px #DDEEEE;
+          color: #333;
+          text-align: center;
+          text-shadow: 1px 1px 1px #fff;
+      }
+      h1{
+          margin-bottom:30px;
+      }
+
+      .lec_name{
+      
+        margin-top:80px;
+        width:300px;
+        height:50px;
+        text-align:center;
+        font-size:35px;
+        font-family: 'IBMPlexSansKR-Bold';
+      }
+
+      .graph{
+        width:500px; 
+        height: 300px; 
+        border-bottom: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        margin: 20px auto;
+        position:relative;
+      }
+      .graph-bar{
+        display: inline-block;
+        position: absolute;
+        width: 30px; 
+        bottom:0; 
+        perspective:200px;
+      }
+      @font-face {
+        font-family: 'IBMPlexSansKR-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Bold.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+      .title-name{
+        font-size:20px;
+      }
+      .mini-header{
+        margin-top:10px;
+      }
+       #container {
+        width: 100%;
+        height: 400px;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+
+{% endblock %}  
+{% block content %}
+    <center>
+        <div class="lec_name">
+          {%if lecName is not none%}
+            {{lecName}}
+          {% else%}
+            <p>선택된 강의 없음</p>
+          {% endif%}
+        </div>
+        <div class="mini-header">
+            <div class="title-name">수강후기</div>
+                <div class="rating">
+                    <div class="review-rating-upper" style="width: {{lec_star_rate/5*100}}%">
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                    </div>
+                    <div class="review-rating-lower">
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                    </div>
+                    <div>{{lec_star_rate}}</div>
+                </div>
+        </div>
+        <div class="review-box">    
+              <div class="left-box">
+                <div class="word-container">
+                    <div class="pos_list">
+                                <h3>긍정적인 단어</h3>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                        <th>순위</th>
+                                        <th>단어</th>
+                                        <th>상관계수</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if pos_list is defined %}
+                                        {% for i in range(pos_len)%}
+                                            <tr>
+                                            <td>{{i+1}}</td> 
+                                            <td>{{pos_list[i][1]}}</td> 
+                                            <td>{{pos_list[i][0]}}</td> 
+                                            </tr>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                    </div>
+                    <div class="neg_list">
+                        <h3>부정적인 단어</h3>
+                        <table>
+                                <thead>
+                                    <tr>
+                                    <th>순위</th>
+                                    <th>단어</th>
+                                    <th>상관계수</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if neg_list is defined %}
+                                    {% for i in range(neg_len)%}
+                                        <tr>
+                                        <td>{{i+1}}</td> 
+                                        <td>{{neg_list[i][1]}}</td> 
+                                        <td>{{neg_list[i][0]}}</td> 
+                                        </tr>
+                                    {% endfor %}
+                                    {% endif %}
+                                </tbody>
+                        </table>
+                    </div>
+                </div> 
+                <div id="container"></div>
+              </div>   
+                <div class="review-container">
+                    <h3>강의평</h3>
+                    {% if review_len is defined %}
+                    {% for i in range(review_len)%}
+                        <div class="review">{{ret_list[i]}}</div>
+                        <div class="review-rating">
+                            <div class="rating-upper" style="width:{{review_rate[i]/5*8.5}}%">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                            <div class="rating-lower">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                            <div>{{review_rate[i]}}</div>
+                        </div>
+                        <hr>
+                    {% endfor %}
+                    {% endif%}
+                </div>
+        </div>
+    </center> 
+
+{% endblock %}
+
+
+

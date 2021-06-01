@@ -1,0 +1,196 @@
+{% extends "layout.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    {%with messages = get_flashed_messages()%}
+      {%if messages %}
+        <script type="text/javascript">
+          alert("{{messages[-1]}}");
+        </script>
+        {%endif%}
+    {%endwith%}
+    <style>
+      th{
+        width:100px;
+      }
+      .pagination {
+        display: inline-block;
+      }
+
+      .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+      }
+
+      .pagination a.active {
+        background-color: #4CAF50;
+        color: white;
+      }
+
+
+      .pagination a:hover:not(.active) {background-color: #ddd;}
+
+      form{
+        display:flex;
+        width:1000px;
+        justify-content: space-between;
+      }
+      .combo{
+        margin-top:15px;
+        
+      }
+      .title{
+        width:1000px;
+        margin-top:30px;
+
+      }
+     .lec_name{
+      
+        margin-top:80px;
+        width:300px;
+        height:50px;
+        text-align:center;
+        font-size:35px;
+        font-family: 'IBMPlexSansKR-Bold';
+      }
+            @font-face {
+        font-family: 'IBMPlexSansKR-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Bold.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+    @font-face {
+        font-family: 'IBMPlexSansKR-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    td{
+      font-family :'IBMPlexSansKR-Regular';
+    }
+    label{
+      margin-right:10px;
+    }
+    </style>
+{% endblock %}  
+{% block content %}
+    <center>
+      <div class="lec_name">
+          {%if lecName is not none%}
+            {{lecName}}
+          {% else%}
+            선택된 강의 없음
+          {% endif%}
+        </div>
+      <div class="title">
+        <form action="/search" method="GET">
+          <div class="combo">
+            <label for="unit">
+              요일
+            </label>
+            <select id="day_unit" name="day_unit">
+              <option value="전체">전체</option>
+              <option value="월">월</option>
+              <option value="화">화</option>
+              <option value="수">수</option>
+              <option value="목">목</option>  
+              <option value="금">금</option>    
+            </select>
+          </div>
+          <div class="combo">
+            <label for="unit">
+              과목구분
+            </label>
+            <select id="lec_unit" name="lec_unit">
+              <option value="전체">전체</option>
+              <option value="전공핵심">전공핵심</option>
+              <option value="전공심화">전공심화</option>
+              <option value="전공기초">전공기초</option>  
+              <option value="교양필수">교양필수</option>
+              <option value="교양선택">교양선택</option>      
+            </select>
+          </div>
+          <div class="combo">
+            <label for="search_type">
+              검색유형
+            </label>
+            <select id="search_type" name="search_type">
+              <option value="강의명">강의명</option>
+              <option value="교수명">교수명</option>     
+            </select>
+          </div>
+          <div>
+            <fieldset><input name="search_name" type="search" /><button type="submit"><i class="fa fa-search"></i></button></fieldset>
+          </div>
+        </form>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-wrap">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>강의명</th>
+                    <th>수업번호</th>
+                    <th>교수명</th>
+                    <th>강의시간</th>
+                    <th>과목구분</th>
+                    <th>강의선택</th>
+                    <th>시간표추가</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for item  in list %}
+                        <tr>
+                          <td>{{item[1]}}</td>
+                          <td>{{item[2]}}</td>
+                          <td>{{item[3]}}</td>
+                          <td>{{item[5]}}</td>
+                          <td>{{item[4]}}</td>
+                          {% if lecNum ==  item[0] %}
+                              <td><a href="{{ url_for('set_lecture', lecNum=item[0]) }}" class="btn btn-success">선택함</a></td>
+                          {% else %}
+                              <td><a href="{{ url_for('set_lecture', lecNum=item[0]) }}" class="btn btn-primary">선택하기</a></td>
+                          {% endif%}
+                          {% if item[0] in  select_list %}
+                              <td><a href="{{ url_for('add_lecture', lecNum=item[0]) }}" class="btn btn-success">선택함</a></td>
+                          {% else %}
+                              <td><a href="{{ url_for('add_lecture', lecNum=item[0]) }}" class="btn btn-primary">선택하기</a></td>
+                          {% endif%}
+                        </tr>
+                    {% endfor %}  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="pagination">
+          {%if my_page is none  %}
+            <a href="#">&laquo;</a>
+            <a class="active" href="{{ url_for('get_page', my_page=1) }}">1</a>
+            <a href="{{ url_for('get_page', my_page=2) }}">2</a>
+            <a href="{{ url_for('get_page', my_page=3) }}">3</a>
+            <a href="{{ url_for('get_page', my_page=4) }}">4</a>
+            <a href="{{ url_for('get_page', my_page=5) }}">5</a>
+            <a href="{{ url_for('get_page', my_page=6) }}">6</a>
+            <a href="{{ url_for('get_page', my_page=1) }}">&raquo;</a>
+          {% else %}
+            <a href="{{ url_for('get_page', my_page = my_page-1) }}">&laquo;</a> 
+            {% for item  in range(my_page,my_page+6)  %}
+              {% if my_page == item%}
+                <a class="active" href="{{ url_for('get_page', my_page=item) }}">{{item}}</a>
+              {% else%}
+                <a href="{{ url_for('get_page', my_page=item) }}">{{item}}</a>
+              {% endif %}
+            {% endfor %}
+            <a href="{{ url_for('get_page', my_page = my_page+1) }}">&raquo;</a>
+          {% endif %}
+        </div>
+    </center> 
+{% endblock %}
+
+
+

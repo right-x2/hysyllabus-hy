@@ -1,0 +1,164 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+.title{
+    display: flex;
+    width:200px;
+    justify-content: space-between;
+}
+
+.content-box{
+    margin-top: 200px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.bar{
+    width: 500px;
+    margin-right: 50px;
+}
+.bar-title{
+    margin: 0 0 0 0;
+    margin-right: 20px;
+    width:140px;
+}
+.bar-box{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+input[type="checkbox"] {
+    position: absolute;
+    visibility: hidden;
+}
+
+label {
+    display: block;
+    position: absolute;
+    width: 60px;
+    height: 34px;
+    border-radius: 17px;
+    background-color: #ddd;
+    transition-duration: 0.2s;
+}
+
+label span {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    z-index: 1;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #fff;
+    transition-duration: 0.2s;
+}
+
+
+label:before,
+label:after{
+    position: absolute;
+    top: 0;
+    width: 34px;
+    font-size: 11px;
+    line-height: 34px;
+    color: #fff;
+    text-align: center;
+}
+
+label:before {
+    left: 0;
+    content: 'ON';
+}
+
+label:after {
+    right: 0;
+    content: 'OFF';
+}
+
+input:checked + label {
+    background-color: #2096f3;
+}
+
+input:checked + label span {
+    transform: translateX(26px);
+}
+.content-box{
+
+    width:800px;
+}
+.content{
+    margin-top:50px;
+}
+
+          @font-face {
+        font-family: 'IBMPlexSansKR-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    a{
+      font-family:'IBMPlexSansKR-Regular';
+      font-size: 20px;
+    }
+    p{
+        font-family:'IBMPlexSansKR-Regular';
+    }
+
+    </style>
+{% endblock %}   
+{% block content%}
+
+    <div class="content">
+        <center>
+        <div class="title"><div><a href="/mypage">내 학점 정보</a></div><div><a href="/mytable">내 시간표</a></div></div>
+        </center>
+        <div class="content-box">
+            <div class="bar-box">
+                <div class="bar-title"><p>졸업학점</p></div>
+                <div class="w3-light-grey w3-round-xlarge bar">
+                    <div class="w3-container w3-blue w3-round-xlarge" style="width:{{grade_rate}}%">{{grade_rate}}%</div>
+                </div>
+                <div>{{grade_point}}/140</div>
+            </div>
+            
+        <div class="bar-box">
+                <div class="bar-title"><p>전공학점</p></div>
+                <div class="w3-light-grey w3-round-xlarge bar">
+                    <div class="w3-container w3-blue w3-round-xlarge" style="width:{{major_rate}}%"><p>{{major_rate}}%</p></div>
+                </div>
+                <div>{{major_point}}/45</div>
+            </div>
+        <div class="bar-box">
+                <div class="bar-title"><p>전공핵심</p></div>
+                <div class="w3-light-grey w3-round-xlarge bar">
+                    <div class="w3-container w3-blue w3-round-xlarge" style="width:{{major_main_rate}}%"><p>{{major_main_rate}}%</p></div>
+                </div>
+                <div>{{major_main_point}}/35</div>
+            </div>
+        <div class="bar-box">
+                <div class="bar-title"><p>교양선택</p></div>
+                <div class="w3-light-grey w3-round-xlarge bar">
+                    <div class="w3-container w3-blue w3-round-xlarge" style="width:{{elec_rate}}%"><p>{{elec_rate}}%</p></div>
+                </div>
+                <div>{{elec_point}}/6</div>
+            </div>
+        <div class="bar-box">
+                <div class="bar-title"><p>사회봉사</p></div>
+                <div>
+                {% if vol_point == 0%}
+                    <input type="checkbox" id="checkbox" disabled="disabled">
+                    <label for="checkbox"><span></span></label>
+                {% else %}
+                    <input type="checkbox"  id="checkbox" checked disabled="disabled">
+                    <label for="checkbox" ><span></span></label>
+                {% endif %}
+                </div>
+            </div>
+    </div>
+
+{% endblock %}

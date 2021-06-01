@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <style>
+      th{
+        width:100px;
+      }
+      td{
+        font-size:20px;
+      }
+     .lec_name{
+        margin-top:80px;
+        width:300px;
+        height:50px;
+        text-align:center;
+        font-size:35px;
+        font-family: 'IBMPlexSansKR-Bold';
+      }
+      @font-face {
+        font-family: 'IBMPlexSansKR-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Bold.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+    @font-face {
+        font-family: 'IBMPlexSansKR-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    td{
+      font-family :'IBMPlexSansKR-Regular';
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    <center>
+        <div class="lec_name">
+          {%if lecName is not none%}
+            {{lecName}}
+          {% else%}
+            선택된 강의 없음
+          {% endif%}
+        </div>  
+      <div class="container">
+
+        <div class="row justify-content-center">
+          <div class="col-md-6 text-center mb-5">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-wrap">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>강의명</th>
+                    <th>교수명</th>
+                    <th>강의시간</th>
+                    <th>강의구분</th>
+                    <th>유사도</th>
+                    <th>강의선택</th>
+                    <th>시간표추가</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                     {% for item  in ret_list %}
+                        <tr>
+                          <td>{{item[0][1]}}</td>
+                          <td>{{item[0][3]}}</td>
+                          <td>{{item[0][5]}}</td>
+                          <td>{{item[0][4]}}</td>
+                          <td>{{item[1]}}%</td>
+                         {% if lecNum ==  item[0] %}
+                              <td><a href="{{ url_for('set_lecture', lecNum=item[0]) }}" class="btn btn-success">선택함</a></td>
+                          {% else %}
+                              <td><a href="{{ url_for('set_lecture', lecNum=item[0]) }}" class="btn btn-primary">선택하기</a></td>
+                          {% endif%}
+                          {% if item[0] in  select_list %}
+                              <td><a href="{{ url_for('add_lecture', lecNum=item[0]) }}" class="btn btn-success">선택함</a></td>
+                          {% else %}
+                              <td><a href="{{ url_for('add_lecture', lecNum=item[0]) }}" class="btn btn-primary">선택하기</a></td>
+                          {% endif%}
+                        </tr>
+                    {% endfor %}  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </center> 
+{% endblock %}
+

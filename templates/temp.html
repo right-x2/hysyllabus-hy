@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/timetable.css') }}">
+{% endblock %}
+{% block content%}
+    <center>
+        <div class="title"><p>강의명: 운영체제론</p><h3>과목 시간표</h3></div>
+        <div class="table">
+            <div class="day time">
+                <div class="day_title">Time</div>
+                <div class="hour">9:00</div>
+                <div class="hour">10:00</div>
+                <div class="hour">11:00</div>
+                <div class="hour">12:00</div>
+                <div class="hour">13:00</div>
+                <div class="hour">14:00</div>
+                <div class="hour">15:00</div>
+                <div class="hour">16:00</div>
+                <div class="hour">17:00</div>
+            </div>
+            
+            <div class="day monday">
+                <div class="day_title">Monday</div>
+                <div class="class red b930" data-tooltip="English Literature"></div>
+                <div class="class b1030" data-tooltip="Probability and Statistics"></div>
+                <!--
+                <div class="class grey" data-tooltip="German">2GER1 [C1]</div>
+                <div class="class short blue" data-tooltip="Additional Probability and Statistics">2MPS+ [K2]</div>
+                -->
+            </div>
+            
+            <div class="day tuesday">
+                <div class="day_title">Tuesday</div>
+                {% for i in range(list_len)%}
+                    {% if day_list[i] == '화' %}
+                    <div class="class red {{start_list[i]}}" data-tooltip="Economics"></div>
+                    {% endif %}
+                {% endfor %}  
+                
+                
+                <div class="class gray" data-tooltip="Economics"></div>
+                <div class="class orange" data-tooltip="German History"></div>
+                <div class="class purple" data-tooltip="Ethics"></div>
+                <div class="class red" data-tooltip="English Language: Writing"></div>
+                <div class="class red" data-tooltip="English Language"></div>
+            </div>
+            
+            <div class="day wednesday">
+                <div class="day_title">Wednesday</div>
+                <div class="class short spacing"></div>
+                <div class="class short yellow" data-tooltip="EU Politics"></div>
+                <div class="class spacing"></div>
+                <div class="class short navy" data-tooltip="Physics">2</div>
+                <div class="class short spacing"></div>
+                <div class="class turquoise" data-tooltip="Physical Education: Swimming"></div>
+            </div>
+            
+            <div class="day thursday">
+                <div class="day_title">Thursday</div>
+                <div class="class grey" data-tooltip="German"></div>
+                <div class="class blue" data-tooltip="Advanced Integral Calculus"></div>
+                <div class="class red" data-tooltip="English Literature"></div>
+                <div class="class short blue" data-tooltip="Additional Basic Integral Calculus"></div>
+                <div class="class short yellow" data-tooltip="UK Politics"></div>
+                <div class="class short yellow" data-tooltip="German Politics"></div>
+                <div class="class green" data-tooltip="Media Studies"></div>
+            </div>
+            
+            <div class="day friday">
+                <div class="day_title">Friday</div>
+                <div class="class spacing"></div>
+                <div class="class green" data-tooltip="Architechture"></div>
+                <div class="class blue" data-tooltip="Physics"></div>
+            </div>
+        </div>
+    </center> 
+{% endblock %}
