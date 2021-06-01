@@ -117,6 +117,10 @@ all_list = []
 for lec in major:
     if(isinstance(lec[15], float)):
         lec[15]="비지정"
+    
+    if(isinstance(lec[17], float)):
+        lec[17]="비지정"
+    
     temp = [lec[0],lec[5],lec[4],lec[17],lec[6],lec[15],lec[6],float(lec[10])]
     all_list.append(temp)
 
@@ -613,23 +617,14 @@ def get_info():
         lec_star_rate = star_list[lecture[0]][4]
         content_list = []
         act_list = []
-        for i in range(1,5):
-            content_list.append(lecture[40+i])
-        for i in range(1,5):
-            act_list.append(lecture[44+i])
-        for i in range(2,11):
-            if(int(lecture[-i])>0):
-                print(grade_name_list[-i])
-                grade_name.append(grade_name_list[-i])
-                grade_rate.append(int(lecture[-i]))
+   
                 
         for review in review_list:        
             if(review[1]==lec_name and review[2]==prof_name):
                 ret_list.append(review[4])
                 review_rate.append(review[5])
 
-        print(lec_name[1]+" "+lec_name[2])
-        print(ret_list)
+  
         if(len(ret_list)>0):
             tfidf_vectorizer.fit(ret_list)
             a = tfidf_vectorizer.vocabulary_# 벡터라이저가 학습한 단어사전을 출력합니다
