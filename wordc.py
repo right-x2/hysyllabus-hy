@@ -13,8 +13,8 @@ wordcloud = pd.read_csv('./csv/wordcloud.csv')
 wordc_list = wordcloud.values.tolist()
 
 
-major = pd.read_csv('/Users/kimjungwoo/Downloads/major.csv')
-kyo = pd.read_csv('/Users/kimjungwoo/Downloads/kyo1.csv')
+major = pd.read_csv('./csv/major.csv')
+kyo = pd.read_csv('./csv/kyo1.csv')
 
 major = major.values.tolist()
 kyo = kyo.values.tolist()
