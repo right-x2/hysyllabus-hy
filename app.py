@@ -455,7 +455,7 @@ def get_mytable():
 
 
 
-@app.route("/keyword")
+@app.route("/review")
 def get_keyword():
 
     print("-----")
@@ -528,14 +528,14 @@ def get_keyword():
                 pos_list.append(word_list[-i])
             
             print(all_review_list)
-            return render_template("keyword.html",grade_name=grade_name,grade_rate=grade_rate,grade_len = len(grade_name),lec_count = int(lec_count),
+            return render_template("review.html",grade_name=grade_name,grade_rate=grade_rate,grade_len = len(grade_name),lec_count = int(lec_count),
                     unit = unit, lec_code = lec_code,lec_major = lec_major, lec_type = lec_type,lec_star_rate = lec_star_rate,
                     content_list = content_list,act_list = act_list,
                     pre_lec = pre_lec, ret_list = ret_list,neg_list = neg_list,pos_list=pos_list,pos_len = len(pos_list),neg_len = len(neg_list),lec_aim = lec_aim,review_rate=review_rate,review_len=len(review_rate),lecName = lecName,all_review_list=all_review_list)
         else:
             print("----------------")
             print("sdafasfdsa")
-            return render_template("keyword.html",lec_star_rate = 0,lec_name = lec_name)
+            return render_template("review.html",lec_star_rate = 0,lec_name = lec_name)
     else:
         return redirect('/')
 
