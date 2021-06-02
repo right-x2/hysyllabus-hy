@@ -617,14 +617,23 @@ def get_info():
         lec_star_rate = star_list[lecture[0]][4]
         content_list = []
         act_list = []
-   
+        for i in range(1,5):
+            content_list.append(lecture[40+i])
+        for i in range(1,5):
+            act_list.append(lecture[44+i])
+        for i in range(2,11):
+            if(int(lecture[-i])>0):
+                print(grade_name_list[-i])
+                grade_name.append(grade_name_list[-i])
+                grade_rate.append(int(lecture[-i]))
                 
         for review in review_list:        
             if(review[1]==lec_name and review[2]==prof_name):
                 ret_list.append(review[4])
                 review_rate.append(review[5])
 
-  
+        print(lec_name[1]+" "+lec_name[2])
+        print(ret_list)
         if(len(ret_list)>0):
             tfidf_vectorizer.fit(ret_list)
             a = tfidf_vectorizer.vocabulary_# 벡터라이저가 학습한 단어사전을 출력합니다
@@ -651,12 +660,14 @@ def get_info():
             return render_template("info.html",grade_name=grade_name,grade_rate=grade_rate,grade_len = len(grade_name),lec_count = int(lec_count),
                     unit = unit, lec_code = lec_code,lec_major = lec_major, lec_type = lec_type,lec_star_rate = lec_star_rate,
                     content_list = content_list,act_list = act_list,
-                    pre_lec = pre_lec, ret_list = ret_list,neg_list = neg_list,pos_list=pos_list,pos_len = len(pos_list),neg_len = len(neg_list),lec_aim = lec_aim,review_rate=review_rate,review_len=len(review_rate),img_name=img_name,my_word_list=my_word_list,list_len = len(my_word_list),lecName=lecName)
+                    pre_lec = pre_lec, ret_list = ret_list,neg_list = neg_list,pos_list=pos_list,pos_len = len(pos_list),neg_len = len(neg_list),lec_aim = lec_aim,review_rate=review_rate,review_len=len(review_rate),img_name=img_name,my_word_list=my_word_list,list_len = len(my_word_list),lecName=lecName,prof_name = prof_name)
         else:
             return render_template("info.html",grade_name=grade_name,grade_rate=grade_rate,grade_len = len(grade_name),lec_count = int(lec_count),
                     unit = unit, lec_code = lec_code,lec_major = lec_major, lec_type = lec_type,lec_star_rate = lec_star_rate,
                     content_list = content_list,act_list = act_list,
-                    pre_lec = pre_lec,neg_list = "non",pos_list="non",lec_aim = lec_aim,list_len=-1,lecName=lecName)
+                    pre_lec = pre_lec,neg_list = "non",pos_list="non",lec_aim = lec_aim,list_len=-1,lecName=lecName,
+        prof_name = prof_name
+                    )
     else:
         return redirect('/')
 
